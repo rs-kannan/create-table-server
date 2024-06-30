@@ -2,12 +2,16 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const UserModel = require('./model/User')
-
+const port = 5000
 const app = express()
 app.use(cors())
 app.use(express.json())
 
-mongoose.connect('mongodb://127.0.0.1:27017/crud');
+mongoose.connect('mongodb+srv://kannansrinivasanrs:root@cluster0.esxbmnq.mongodb.net/').then(()=>{
+    console.log('connected to db')
+}).catch((err)=>{
+    console.log(err)
+})
 
 app.get('/', (req, res) => {
     UserModel.find()
@@ -38,6 +42,6 @@ app.delete('/deleteuser/:id', (req, res) => {
     .catch(err => res.json(err))
 })
 
-app.listen(3001, () => {
-    console.log("Server is Running");
+app.listen(port, () => {
+    console.log("Server is Running :",port);
 })
